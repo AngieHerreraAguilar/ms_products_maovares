@@ -10,16 +10,21 @@ import java.util.Base64;
 @Service
 public class QueueService {
 
-    private final QueueClient queueClient;
+    private QueueClient queueClient;
 
     public QueueService(@Value("${AZURE_STORAGE_CONNECTION_STRING:}") String connectionString) {
-        this.queueClient = new QueueClientBuilder()
-                .connectionString(connectionString)
-                .queueName("ordersqueue")
-                .buildClient();
+        if (connectionString != null && !connectionString.isEmpty()) {
+            this.queueClient = new QueueClientBuilder()
+                    .connectionString(connectionString)
+                    .queueName("ordersqueue")
+                    .buildClient();
+        }
     }
 
     public void sendMessage(String message) {
+        if (queueClient == null) {
+            return;
+        }
         String encoded = Base64.getEncoder().encodeToString(message.getBytes());
         queueClient.sendMessage(encoded);
     }
