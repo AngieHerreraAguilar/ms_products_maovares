@@ -79,6 +79,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+    		<groupId>com.azure</groupId>
+    		<artifactId>azure-storage-queue</artifactId>
+    		<version>12.22.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
